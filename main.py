@@ -1,14 +1,11 @@
-from fastapi import FastAPI, Response
-import uvicorn
+import flask
 
-app = FastAPI()
-
-
+app = flask.Flask(__name__)
 
 @app.get("/")
-async def root():
-    return {"message": "Hello World"}
+def hello():
+    return "Hello World!\n"
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8012)
+    app.run(host="localhost", port=8080, debug=True)
