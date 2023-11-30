@@ -1,15 +1,23 @@
+# https://codelabs.developers.google.com/codelabs/cloud-app-engine-python3#0
 from flask import Flask, jsonify, request, url_for
 from flask_mysqldb import MySQL
 
 app = Flask(__name__)
+# app.config['MYSQL_HOST'] = 'database-1.cvlxq8ccnbut.us-east-1.rds.amazonaws.com'
+# app.config['MYSQL_PORT'] = 3306
+# app.config['MYSQL_USER'] = 'admin'
+# app.config['MYSQL_PASSWORD'] = 'Natalie3399!'
+# app.config['MYSQL_DB'] = 'review'
+
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = 'dbuserdbuser'
 app.config['MYSQL_DB'] = 'e6156'
+
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 mysql = MySQL(app)
 
-DEFAULT_PER_PAGE = 1
+DEFAULT_PER_PAGE = 100
 
 def pagination_links(page, total_pages, endpoint, per_page, filters):
     links = {}
@@ -34,17 +42,17 @@ def pagination_links(page, total_pages, endpoint, per_page, filters):
     return links
 
 @app.route("/")
-def hello_world():
-    return "Hello World!\n"
+def home_page():
+    return "review API!\n"
 
 @app.route('/api/review/', methods=['GET'])
-def get_reviews():
+def get_review():
     '''
         Get reviews (filter accepted)
     '''
     cur = mysql.connection.cursor()
     page = int(request.args.get('page', 1))
-    per_page = int(request.args.get('per_page', DEFAULT_PER_PAGE))  # Default to 10 items per page
+    per_page = int(request.args.get('per_page', DEFAULT_PER_PAGE))
 
     filters = {key: value for key, value in request.args.items() if key not in ['page', 'per_page']}
     offset = (page - 1) * per_page
@@ -52,7 +60,6 @@ def get_reviews():
     query = f"SELECT * FROM review "
     query_filters = "WHERE 1=1"
     for key, value in filters.items():
-        # Check the type of the value and format accordingly
         if isinstance(value, str):
             query_filters += f" AND {key} = '{value}'"
         else:
@@ -63,44 +70,19 @@ def get_reviews():
     cur.execute(query)
     data = cur.fetchall()
 
-    # Calculate total number of items and pages
     cur.execute(f"SELECT COUNT(*) FROM review "+query_filters)
     total_items = cur.fetchone()['COUNT(*)']
     total_pages = (total_items + per_page - 1) // per_page
 
-    # Generate pagination links
-    links = pagination_links(page, total_pages, 'get_reviews', per_page, filters)
+    links = pagination_links(page, total_pages, 'get_review', per_page, filters)
 
     cur.close()
-
     return jsonify({'data': data, 'links': links})
 
-@app.route('/api/review/<int:review_id>/', methods=['GET'])
-def get_review_by_id(review_id):
-    '''
-        Get a review by review id
-    '''
-    cur = mysql.connection.cursor()
-    cur.execute('''SELECT * FROM review WHERE review_id = %s''', (review_id,))
-    data = cur.fetchall()
-    cur.close()
-    return jsonify(data)
-
-@app.route('/api/review/user/<int:user_id>/', methods=['GET'])
-def get_review_by_user_id(user_id):
-    '''
-        Get all reviews under a specific user
-    '''
-    cur = mysql.connection.cursor()
-    cur.execute('''SELECT * FROM review WHERE user_id = %s''', (user_id,))
-    data = cur.fetchall()
-    cur.close()
-    return jsonify(data)
-
 @app.route('/api/review/', methods=['POST'])
-def add_review():
+def post_review():
     '''
-        Add new review
+        post a new review
     '''
     cur = mysql.connection.cursor()
     data = request.json
@@ -110,19 +92,27 @@ def add_review():
 
     query = f"INSERT INTO review ({keys}) VALUES ({values})"
 
-    cur.execute(query, tuple(data.values()))
-
+    try:
+        cur.execute(query, tuple(data.values()))
+    except Exception as e:
+        return jsonify({'error message': str(e)})
     mysql.connection.commit()
     cur.close()
     return jsonify({'message': 'Review posted successfully'})
 
-@app.route('/api/review/<int:review_id>/', methods=['PUT'])
-def update_review(review_id):
+@app.route('/api/review/', methods=['PUT'])
+def update_review():
     '''
         Update a review by review id
     '''
     cur = mysql.connection.cursor()
     data = request.json
+    try:
+        review_id = data['review_id']
+    except Exception as e:
+        return jsonify({'error message': 'parameter not found: '+str(e)})
+    if 'pinned' in data.keys():
+        return jsonify({'error message': 'cannot modify "pinned" column'})
 
     set_clause = ', '.join(f"{key} = %s" for key in data.keys())
     query = f"UPDATE review SET {set_clause} WHERE review_id = %s"
@@ -133,53 +123,135 @@ def update_review(review_id):
     cur.close()
     return jsonify({'message': 'Review updated successfully'})
 
-@app.route('/api/admin/pin_review/<int:review_id>/', methods=['PUT'])
-def pin_review(review_id):
-    '''
-        Pin a review by admin
-    '''
+@app.route('/api/review/', methods=['DELETE'])
+def delete_review():
     cur = mysql.connection.cursor()
-
-    query = f"UPDATE review SET pinned = 1 WHERE review_id = %s"
-
-    cur.execute(query, (review_id,))
-
-    mysql.connection.commit()
-    cur.close()
-    return jsonify({'message': 'Review pinned successfully'})
-
-@app.route('/api/review/<int:review_id>', methods=['DELETE'])
-def delete_review(review_id):
-    cur = mysql.connection.cursor()
+    data = request.json
+    try:
+        review_id = data['review_id']
+    except Exception as e:
+        return jsonify({'error message': 'parameter not found: '+str(e)})
     cur.execute('''DELETE FROM review WHERE review_id = %s''', (review_id,))
     mysql.connection.commit()
     cur.close()
     return jsonify({'message': 'Review deleted successfully'})
 
-@app.route('/api/review/comment/<int:comment_id>/', methods=['GET'])
-def get_comment_by_id(comment_id):
+@app.route('/api/admin/pin_review/', methods=['PUT'])
+def pin_review():
     '''
-        Get a comment by comment id
+        Pin a review by review id (only admin can use)
     '''
     cur = mysql.connection.cursor()
-    cur.execute('''SELECT * FROM comment WHERE comment_id = %s''', (comment_id,))
-    data = cur.fetchall()
-    cur.close()
-    return jsonify(data)
+    data = request.json
+    try:
+        review_id = data['review_id']
+    except Exception as e:
+        return jsonify({'error message': 'parameter not found: '+str(e)})
 
-@app.route('/api/review/<int:review_id>/comment/', methods=['GET'])
-def get_comments_by_review_id(review_id):
+    query = f"UPDATE review SET pinned = 1 WHERE review_id = {review_id}"
+
+    cur.execute(query)
+
+    mysql.connection.commit()
+    cur.close()
+    return jsonify({'message': "Review pinned successfully"})
+
+@app.route('/api/admin/unpin_review/', methods=['PUT'])
+def unpin_review():
     '''
-        Get all comments for a review
+        Unpin a review by review id (only admin can use)
     '''
     cur = mysql.connection.cursor()
-    cur.execute('''SELECT * FROM comment WHERE review_id = %s''', (review_id,))
-    data = cur.fetchall()
+    data = request.json
+    try:
+        review_id = data['review_id']
+    except Exception as e:
+        return jsonify({'error message': 'parameter not found: '+str(e)})
+
+    query = f"UPDATE review SET pinned = 0 WHERE review_id = {review_id}"
+
+    cur.execute(query)
+
+    mysql.connection.commit()
     cur.close()
-    return jsonify(data)
+    return jsonify({'message': "Review unpinned successfully"})
+
+@app.route('/api/admin/show_review/', methods=['PUT'])
+def show_review():
+    '''
+        show a review by review id (only admin can use)
+    '''
+    cur = mysql.connection.cursor()
+    data = request.json
+    try:
+        review_id = data['review_id']
+    except Exception as e:
+        return jsonify({'error message': 'parameter not found: '+str(e)})
+
+    query = f"UPDATE review SET `show` = 1 WHERE review_id = {review_id}"
+
+    cur.execute(query)
+
+    mysql.connection.commit()
+    cur.close()
+    return jsonify({'message': "Review showed successfully"})
+
+@app.route('/api/admin/hide_review/', methods=['PUT'])
+def hide_review():
+    '''
+        hide a review by review id (only admin can use)
+    '''
+    cur = mysql.connection.cursor()
+    data = request.json
+    try:
+        review_id = data['review_id']
+    except Exception as e:
+        return jsonify({'error message': 'parameter not found: '+str(e)})
+
+    query = f"UPDATE review SET `show` = 0 WHERE review_id = {review_id}"
+
+    cur.execute(query)
+
+    mysql.connection.commit()
+    cur.close()
+    return jsonify({'message': "Review hided successfully"})
+
+@app.route('/api/review/comment/', methods=['GET'])
+def get_comment():
+    '''
+        Get comments (filter accepted in params)
+    '''
+    cur = mysql.connection.cursor()
+    page = int(request.args.get('page', 1))
+    per_page = int(request.args.get('per_page', DEFAULT_PER_PAGE))
+
+    filters = {key: value for key, value in request.args.items() if key not in ['page', 'per_page']}
+    offset = (page - 1) * per_page
+
+    query = f"SELECT * FROM comment "
+    query_filters = "WHERE 1=1"
+    for key, value in filters.items():
+        if isinstance(value, str):
+            query_filters += f" AND {key} = '{value}'"
+        else:
+            query_filters += f" AND {key} = {value}"
+    query += query_filters
+    query += f" LIMIT {offset}, {per_page}"
+
+    cur.execute(query)
+    data = cur.fetchall()
+
+    cur.execute(f"SELECT COUNT(*) FROM comment " + query_filters)
+    total_items = cur.fetchone()['COUNT(*)']
+    total_pages = (total_items + per_page - 1) // per_page
+
+    links = pagination_links(page, total_pages, 'get_comment', per_page, filters)
+
+    cur.close()
+    return jsonify({'data': data, 'links': links})
 
 @app.route('/api/review/comment/', methods=['POST'])
-def reply_review():
+def post_comment():
     '''
         Reply to a review
     '''
@@ -191,20 +263,26 @@ def reply_review():
 
     query = f"INSERT INTO comment ({keys}) VALUES ({values})"
 
-    cur.execute(query, tuple(data.values()))
+    try:
+        cur.execute(query, tuple(data.values()))
+    except Exception as e:
+        return jsonify({'error message': str(e)})
 
     mysql.connection.commit()
     cur.close()
     return jsonify({'message': 'Review replied successfully'})
 
-@app.route('/api/review/comment/<int:comment_id>', methods=['PUT'])
-def update_comment(comment_id):
+@app.route('/api/review/comment/', methods=['PUT'])
+def update_comment():
     '''
         Update a comment/like/dislike/report by comment id
     '''
     cur = mysql.connection.cursor()
     data = request.json
-
+    try:
+        comment_id = data['comment_id']
+    except Exception as e:
+        return jsonify({'error message': 'parameter not found: '+str(e)})
     set_clause = ', '.join(f"{key} = %s" for key in data.keys())
     query = f"UPDATE comment SET {set_clause} WHERE comment_id = %s"
 
@@ -214,9 +292,17 @@ def update_comment(comment_id):
     cur.close()
     return jsonify({'message': 'Comment updated successfully'})
 
-@app.route('/api/review/comment/<int:comment_id>', methods=['DELETE'])
-def delete_comment(comment_id):
+@app.route('/api/review/comment/', methods=['DELETE'])
+def delete_comment():
+    '''
+        Delete a comment/like/dislike/report by comment id
+    '''
     cur = mysql.connection.cursor()
+    data = request.json
+    try:
+        comment_id = data['comment_id']
+    except Exception as e:
+        return jsonify({'error message': 'parameter not found: '+str(e)})
     cur.execute('''DELETE FROM comment WHERE comment_id = %s''', (comment_id,))
     mysql.connection.commit()
     cur.close()
