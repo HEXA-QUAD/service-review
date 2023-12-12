@@ -5,12 +5,77 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1bed9720-c50f-4c42-885f-e0ff096ec4ae" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/lambda_function.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/my_deployment_package.zip" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/my_deployment_package/PyMySQL-1.1.0.dist-info/INSTALLER" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/my_deployment_package/PyMySQL-1.1.0.dist-info/LICENSE" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/my_deployment_package/PyMySQL-1.1.0.dist-info/METADATA" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/my_deployment_package/PyMySQL-1.1.0.dist-info/RECORD" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/my_deployment_package/PyMySQL-1.1.0.dist-info/REQUESTED" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/my_deployment_package/PyMySQL-1.1.0.dist-info/WHEEL" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/my_deployment_package/PyMySQL-1.1.0.dist-info/top_level.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/my_deployment_package/lambda_function.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/my_deployment_package/pymysql/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/my_deployment_package/pymysql/_auth.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/my_deployment_package/pymysql/charset.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/my_deployment_package/pymysql/connections.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/my_deployment_package/pymysql/constants/CLIENT.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/my_deployment_package/pymysql/constants/COMMAND.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/my_deployment_package/pymysql/constants/CR.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/my_deployment_package/pymysql/constants/ER.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/my_deployment_package/pymysql/constants/FIELD_TYPE.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/my_deployment_package/pymysql/constants/FLAG.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/my_deployment_package/pymysql/constants/SERVER_STATUS.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/my_deployment_package/pymysql/constants/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/my_deployment_package/pymysql/converters.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/my_deployment_package/pymysql/cursors.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/my_deployment_package/pymysql/err.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/my_deployment_package/pymysql/optionfile.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/my_deployment_package/pymysql/protocol.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/my_deployment_package/pymysql/times.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/package/PyMySQL-1.1.0.dist-info/INSTALLER" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/package/PyMySQL-1.1.0.dist-info/LICENSE" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/package/PyMySQL-1.1.0.dist-info/METADATA" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/package/PyMySQL-1.1.0.dist-info/RECORD" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/package/PyMySQL-1.1.0.dist-info/REQUESTED" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/package/PyMySQL-1.1.0.dist-info/WHEEL" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/package/PyMySQL-1.1.0.dist-info/top_level.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/package/pymysql/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/package/pymysql/_auth.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/package/pymysql/charset.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/package/pymysql/connections.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/package/pymysql/constants/CLIENT.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/package/pymysql/constants/COMMAND.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/package/pymysql/constants/CR.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/package/pymysql/constants/ER.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/package/pymysql/constants/FIELD_TYPE.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/package/pymysql/constants/FLAG.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/package/pymysql/constants/SERVER_STATUS.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/package/pymysql/constants/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/package/pymysql/converters.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/package/pymysql/cursors.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/package/pymysql/err.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/package/pymysql/optionfile.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/package/pymysql/protocol.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/package/pymysql/times.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sendSNS.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/send_email_test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/service-review.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/service-review.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
   </component>
   <component name="FlaskConsoleOptions" custom-start-script="import sys&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo&#10;locals().update(ScriptInfo(create_app=None).load_app().make_shell_context())&#10;print(&quot;Python %s on %s\nApp: %s [%s]\nInstance: %s&quot; % (sys.version, sys.platform, app.import_name, app.env, app.instance_path))">
     <envs>
@@ -40,23 +105,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "main",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
-  <component name="RunManager">
+}</component>
+  <component name="RunManager" selected="Flask server.service-review">
     <configuration name="service-review" type="PythonConfigurationType" factoryName="Python">
       <module name="service-review" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -79,6 +144,21 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="service-review" type="Python.FlaskServer">
+      <module name="service-review" />
+      <option name="target" value="$PROJECT_DIR$/app.py" />
+      <option name="targetType" value="PATH" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <method v="2" />
+    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -90,7 +170,9 @@
       <updated>1699907280444</updated>
       <workItem from="1699907281680" duration="5641000" />
       <workItem from="1700226614128" duration="50000" />
-      <workItem from="1700226784311" duration="29924000" />
+      <workItem from="1700226784311" duration="38162000" />
+      <workItem from="1701930744794" duration="21000" />
+      <workItem from="1701932306610" duration="3911000" />
     </task>
     <servers />
   </component>

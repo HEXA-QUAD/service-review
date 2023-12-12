@@ -2,6 +2,7 @@
 
 from flask import Flask, jsonify, request, url_for
 from flask_mysqldb import MySQL
+from sendSNS import send2SNS
 
 app = Flask(__name__)
 # app.config['MYSQL_HOST'] = 'database-1.cvlxq8ccnbut.us-east-1.rds.amazonaws.com'
@@ -88,8 +89,8 @@ def post_review():
     cur = mysql.connection.cursor()
     data = request.json
 
-    keys = ', '.join(data.keys()) + ', pinned'
-    values = ', '.join('%s' for _ in data.values()) + ', false'
+    keys = ', '.join(data.keys()) + ', pinned, `show`'
+    values = ', '.join('%s' for _ in data.values()) + ', false, false'
 
     query = f"INSERT INTO review ({keys}) VALUES ({values})"
 
@@ -99,6 +100,7 @@ def post_review():
         return jsonify({'error message': str(e)})
     mysql.connection.commit()
     cur.close()
+    send2SNS()
     return jsonify({'message': 'Review posted successfully'})
 
 @app.route('/api/review/', methods=['PUT'])
@@ -120,8 +122,12 @@ def update_review():
 
     cur.execute(query, tuple(data.values()) + (review_id,))
 
+    query = f"UPDATE review SET `show` = 1 WHERE review_id = {review_id}"
+    cur.execute(query)
+
     mysql.connection.commit()
     cur.close()
+    send2SNS()
     return jsonify({'message': 'Review updated successfully'})
 
 @app.route('/api/review/', methods=['DELETE'])
