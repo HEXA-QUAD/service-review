@@ -5,65 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1bed9720-c50f-4c42-885f-e0ff096ec4ae" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/lambda_function.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/my_deployment_package.zip" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/my_deployment_package/PyMySQL-1.1.0.dist-info/INSTALLER" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/my_deployment_package/PyMySQL-1.1.0.dist-info/LICENSE" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/my_deployment_package/PyMySQL-1.1.0.dist-info/METADATA" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/my_deployment_package/PyMySQL-1.1.0.dist-info/RECORD" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/my_deployment_package/PyMySQL-1.1.0.dist-info/REQUESTED" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/my_deployment_package/PyMySQL-1.1.0.dist-info/WHEEL" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/my_deployment_package/PyMySQL-1.1.0.dist-info/top_level.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/my_deployment_package/lambda_function.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/my_deployment_package/pymysql/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/my_deployment_package/pymysql/_auth.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/my_deployment_package/pymysql/charset.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/my_deployment_package/pymysql/connections.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/my_deployment_package/pymysql/constants/CLIENT.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/my_deployment_package/pymysql/constants/COMMAND.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/my_deployment_package/pymysql/constants/CR.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/my_deployment_package/pymysql/constants/ER.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/my_deployment_package/pymysql/constants/FIELD_TYPE.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/my_deployment_package/pymysql/constants/FLAG.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/my_deployment_package/pymysql/constants/SERVER_STATUS.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/my_deployment_package/pymysql/constants/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/my_deployment_package/pymysql/converters.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/my_deployment_package/pymysql/cursors.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/my_deployment_package/pymysql/err.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/my_deployment_package/pymysql/optionfile.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/my_deployment_package/pymysql/protocol.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/my_deployment_package/pymysql/times.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/package/PyMySQL-1.1.0.dist-info/INSTALLER" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/package/PyMySQL-1.1.0.dist-info/LICENSE" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/package/PyMySQL-1.1.0.dist-info/METADATA" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/package/PyMySQL-1.1.0.dist-info/RECORD" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/package/PyMySQL-1.1.0.dist-info/REQUESTED" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/package/PyMySQL-1.1.0.dist-info/WHEEL" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/package/PyMySQL-1.1.0.dist-info/top_level.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/package/pymysql/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/package/pymysql/_auth.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/package/pymysql/charset.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/package/pymysql/connections.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/package/pymysql/constants/CLIENT.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/package/pymysql/constants/COMMAND.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/package/pymysql/constants/CR.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/package/pymysql/constants/ER.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/package/pymysql/constants/FIELD_TYPE.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/package/pymysql/constants/FLAG.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/package/pymysql/constants/SERVER_STATUS.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/package/pymysql/constants/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/package/pymysql/converters.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/package/pymysql/cursors.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/package/pymysql/err.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/package/pymysql/optionfile.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/package/pymysql/protocol.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/package/pymysql/times.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sendSNS.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/send_email_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/service-review.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/service-review.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sendSNS.py" beforeDir="false" afterPath="$PROJECT_DIR$/sendSNS.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -172,7 +115,7 @@
       <workItem from="1700226614128" duration="50000" />
       <workItem from="1700226784311" duration="38162000" />
       <workItem from="1701930744794" duration="21000" />
-      <workItem from="1701932306610" duration="3911000" />
+      <workItem from="1701932306610" duration="6884000" />
     </task>
     <servers />
   </component>

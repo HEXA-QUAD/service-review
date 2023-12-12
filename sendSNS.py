@@ -1,8 +1,8 @@
 import boto3
 
 def send2SNS():
-    aws_access_key_id = 'AKIA2Y7LLO7R5EXFRGK2'
-    aws_secret_access_key = '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'
+    aws_access_key_id = 'AKIA2Y7LLO7R2NUJNPW7'
+    aws_secret_access_key = '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'
     region_name = 'us-east-1'
     sns_topic_arn = 'arn:aws:sns:us-east-1:740838569955:new_post_sns'
 
@@ -14,5 +14,3 @@ def send2SNS():
         TopicArn=sns_topic_arn,
         Message=message
     )
-
-    # print("MessageId:", response['MessageId'])
