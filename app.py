@@ -1,20 +1,21 @@
 # https://codelabs.developers.google.com/codelabs/cloud-app-engine-python3#0
+# https://columbiauniversity.zoom.us/rec/play/wCYEMPxn-r4h_sooepcAcp7WIvt9DuL85rA08it3yq-AhuGF13NtzqcRCoZWW9D6KE5bimxq-NBu5PkO.k-ZYTjoKJlMIxC0P
 
 from flask import Flask, jsonify, request, url_for
 from flask_mysqldb import MySQL
 from sendSNS import send2SNS
 
 app = Flask(__name__)
-# app.config['MYSQL_HOST'] = 'database-1.cvlxq8ccnbut.us-east-1.rds.amazonaws.com'
-# app.config['MYSQL_PORT'] = 3306
-# app.config['MYSQL_USER'] = 'admin'
-# app.config['MYSQL_PASSWORD'] = 'Natalie3399!'
-# app.config['MYSQL_DB'] = 'review'
+app.config['MYSQL_HOST'] = 'database-1.cvlxq8ccnbut.us-east-1.rds.amazonaws.com'
+app.config['MYSQL_PORT'] = 3306
+app.config['MYSQL_USER'] = 'admin'
+app.config['MYSQL_PASSWORD'] = 'Natalie3399!'
+app.config['MYSQL_DB'] = 'review'
 
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'dbuserdbuser'
-app.config['MYSQL_DB'] = 'e6156'
+# app.config['MYSQL_HOST'] = 'localhost'
+# app.config['MYSQL_USER'] = 'root'
+# app.config['MYSQL_PASSWORD'] = 'dbuserdbuser'
+# app.config['MYSQL_DB'] = 'e6156'
 
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 mysql = MySQL(app)
@@ -316,4 +317,4 @@ def delete_comment():
     return jsonify({'message': 'Comment deleted successfully'})
 
 if __name__ == "__main__":
-    app.run(host="localhost", port=8080, debug=True)
+    app.run(host="0.0.0.0", port=8080, debug=True)
