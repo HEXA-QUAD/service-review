@@ -20,7 +20,7 @@ app.config['MYSQL_DB'] = 'review'
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 mysql = MySQL(app)
 
-DEFAULT_PER_PAGE = 100
+DEFAULT_PER_PAGE = 10
 
 def pagination_links(page, total_pages, endpoint, per_page, filters):
     links = {}
@@ -90,7 +90,7 @@ def post_review():
     cur = mysql.connection.cursor()
     data = request.json
 
-    keys = ', '.join(data.keys()) + ', pinned, `show`'
+    keys = ', '.join(data.keys()) + ', pinned, shown'
     values = ', '.join('%s' for _ in data.values()) + ', false, false'
 
     query = f"INSERT INTO review ({keys}) VALUES ({values})"
@@ -123,7 +123,7 @@ def update_review():
 
     cur.execute(query, tuple(data.values()) + (review_id,))
 
-    query = f"UPDATE review SET `show` = 1 WHERE review_id = {review_id}"
+    query = f"UPDATE review SET shown = 1 WHERE review_id = {review_id}"
     cur.execute(query)
 
     mysql.connection.commit()
@@ -196,7 +196,7 @@ def show_review():
     except Exception as e:
         return jsonify({'error message': 'parameter not found: '+str(e)})
 
-    query = f"UPDATE review SET `show` = 1 WHERE review_id = {review_id}"
+    query = f"UPDATE review SET shown = 1 WHERE review_id = {review_id}"
 
     cur.execute(query)
 
@@ -216,7 +216,7 @@ def hide_review():
     except Exception as e:
         return jsonify({'error message': 'parameter not found: '+str(e)})
 
-    query = f"UPDATE review SET `show` = 0 WHERE review_id = {review_id}"
+    query = f"UPDATE review SET shown = 0 WHERE review_id = {review_id}"
 
     cur.execute(query)
 
@@ -257,6 +257,30 @@ def get_comment():
 
     cur.close()
     return jsonify({'data': data, 'links': links})
+
+@app.route('/api/review/comment/like/', methods=['GET'])
+def get_num_like_by_review():
+    cur = mysql.connection.cursor()
+    review_id = int(request.args.get('review_id', 1))
+
+    query = f"SELECT COUNT(*) AS num_of_likes FROM comment WHERE type = 'like' AND review_id = {review_id}"
+    cur.execute(query)
+    data = cur.fetchall()
+
+    cur.close()
+    return jsonify(data)
+
+@app.route('/api/review/comment/dislike/', methods=['GET'])
+def get_num_dislike_by_review():
+    cur = mysql.connection.cursor()
+    review_id = int(request.args.get('review_id', 1))
+
+    query = f"SELECT COUNT(*) AS num_of_likes FROM comment WHERE type = 'dislike' AND review_id = {review_id}"
+    cur.execute(query)
+    data = cur.fetchall()
+
+    cur.close()
+    return jsonify(data)
 
 @app.route('/api/review/comment/', methods=['POST'])
 def post_comment():
@@ -317,4 +341,4 @@ def delete_comment():
     return jsonify({'message': 'Comment deleted successfully'})
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8080, debug=True)
+    app.run(host="localhost", port=8090, debug=True)
