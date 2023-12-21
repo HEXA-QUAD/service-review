@@ -341,4 +341,4 @@ def delete_comment():
     return jsonify({'message': 'Comment deleted successfully'})
 
 if __name__ == "__main__":
-    app.run(host="localhost", port=8090, debug=True)
+    app.run(host="0.0.0.0", port=8090, debug=True)
