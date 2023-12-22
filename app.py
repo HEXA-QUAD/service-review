@@ -95,21 +95,23 @@ def post_review():
     '''
     cur = mysql.connection.cursor()
     data = request.json
-    logging.info(data)
-    api_url = profanity_api_url + '?text={}'.format(data['contents'])
-    response = requests.get(api_url, headers={'X-Api-Key': 'M0eB3+yE0Y1SeYEcPge8pw==RCoIJ0GIrXiOguwn'})
-    dict_data = json.loads(response.text)
-    if response.status_code == requests.codes.ok:
-        is_profanity = dict_data["has_profanity"]
-        logging.info(is_profanity)
-        if is_profanity:
-            values = ', '.join('%s' for _ in data.values()) + ', false, false'
-            send2SNS()
-        else:
-            values = ', '.join('%s' for _ in data.values()) + ', false, true'
-    else:
-        print("Error:", response.status_code, response.text)
 
+    if "contents" in data:
+        api_url = profanity_api_url + '?text={}'.format(data['contents'])
+        response = requests.get(api_url, headers={'X-Api-Key': 'M0eB3+yE0Y1SeYEcPge8pw==RCoIJ0GIrXiOguwn'})
+        dict_data = json.loads(response.text)
+        if response.status_code == requests.codes.ok:
+            is_profanity = dict_data["has_profanity"]
+            logging.info(is_profanity)
+            if is_profanity:
+                values = ', '.join('%s' for _ in data.values()) + ', false, false'
+                send2SNS()
+            else:
+                values = ', '.join('%s' for _ in data.values()) + ', false, true'
+        else:
+            print("Error:", response.status_code, response.text)
+    else:
+        values = ', '.join('%s' for _ in data.values()) + ', false, true'
     keys = ', '.join(data.keys()) + ', pinned, shown'
 
     query = f"INSERT INTO review ({keys}) VALUES ({values})"
@@ -137,19 +139,22 @@ def update_review():
     if 'pinned' in data.keys():
         return jsonify({'error message': 'cannot modify "pinned" column'})
 
-    api_url = profanity_api_url + '?text={}'.format(data['contents'])
-    response = requests.get(api_url, headers={'X-Api-Key': 'M0eB3+yE0Y1SeYEcPge8pw==RCoIJ0GIrXiOguwn'})
-    dict_data = json.loads(response.text)
-    if response.status_code == requests.codes.ok:
-        is_profanity = dict_data["has_profanity"]
-        logging.info(is_profanity)
-        if is_profanity:
-            values = ', '.join('%s' for _ in data.values()) + ', false, false'
-            send2SNS()
+    if "contents" in data:
+        api_url = profanity_api_url + '?text={}'.format(data['contents'])
+        response = requests.get(api_url, headers={'X-Api-Key': 'M0eB3+yE0Y1SeYEcPge8pw==RCoIJ0GIrXiOguwn'})
+        dict_data = json.loads(response.text)
+        if response.status_code == requests.codes.ok:
+            is_profanity = dict_data["has_profanity"]
+            logging.info(is_profanity)
+            if is_profanity:
+                values = ', '.join('%s' for _ in data.values()) + ', false, false'
+                send2SNS()
+            else:
+                values = ', '.join('%s' for _ in data.values()) + ', false, true'
         else:
-            values = ', '.join('%s' for _ in data.values()) + ', false, true'
+            print("Error:", response.status_code, response.text)
     else:
-        print("Error:", response.status_code, response.text)
+        values = ', '.join('%s' for _ in data.values()) + ', false, true'
 
     set_clause = ', '.join(f"{key} = %s" for key in data.keys())
     query = f"UPDATE review SET {set_clause} WHERE review_id = %s"
