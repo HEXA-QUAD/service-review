@@ -4,6 +4,8 @@
 from flask import Flask, jsonify, request, url_for
 from flask_mysqldb import MySQL
 from sendSNS import send2SNS
+import requests
+
 
 app = Flask(__name__)
 app.config['MYSQL_HOST'] = 'database-1.cvlxq8ccnbut.us-east-1.rds.amazonaws.com'
@@ -21,6 +23,8 @@ app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 mysql = MySQL(app)
 
 DEFAULT_PER_PAGE = 10
+
+profanity_api_url= 'https://api.api-ninjas.com/v1/profanityfilter'
 
 def pagination_links(page, total_pages, endpoint, per_page, filters):
     links = {}
@@ -90,8 +94,19 @@ def post_review():
     cur = mysql.connection.cursor()
     data = request.json
 
+    api_url = profanity_api_url + '{}'.format(data['contents'])
+    response = requests.get(api_url, headers={'X-Api-Key': 'M0eB3+yE0Y1SeYEcPge8pw==RCoIJ0GIrXiOguwn'})
+    if response.status_code == requests.codes.ok:
+        is_profanity = response.text["has_profanity"]
+        if is_profanity:
+            values = ', '.join('%s' for _ in data.values()) + ', false, false'
+            send2SNS()
+        else:
+            values = ', '.join('%s' for _ in data.values()) + ', false, true'
+    else:
+        print("Error:", response.status_code, response.text)
+
     keys = ', '.join(data.keys()) + ', pinned, shown'
-    values = ', '.join('%s' for _ in data.values()) + ', false, false'
 
     query = f"INSERT INTO review ({keys}) VALUES ({values})"
 
@@ -101,7 +116,7 @@ def post_review():
         return jsonify({'error message': str(e)})
     mysql.connection.commit()
     cur.close()
-    send2SNS()
+
     return jsonify({'message': 'Review posted successfully'})
 
 @app.route('/api/review/', methods=['PUT'])
@@ -118,12 +133,24 @@ def update_review():
     if 'pinned' in data.keys():
         return jsonify({'error message': 'cannot modify "pinned" column'})
 
+    api_url = profanity_api_url + '{}'.format(data['contents'])
+    response = requests.get(api_url, headers={'X-Api-Key': 'M0eB3+yE0Y1SeYEcPge8pw==RCoIJ0GIrXiOguwn'})
+    if response.status_code == requests.codes.ok:
+        is_profanity = response.text["has_profanity"]
+        if is_profanity:
+            values = ', '.join('%s' for _ in data.values()) + ', false, false'
+            send2SNS()
+        else:
+            values = ', '.join('%s' for _ in data.values()) + ', false, true'
+    else:
+        print("Error:", response.status_code, response.text)
+
     set_clause = ', '.join(f"{key} = %s" for key in data.keys())
     query = f"UPDATE review SET {set_clause} WHERE review_id = %s"
 
     cur.execute(query, tuple(data.values()) + (review_id,))
 
-    query = f"UPDATE review SET shown = 1 WHERE review_id = {review_id}"
+    query = f"UPDATE review SET shown = 0 WHERE review_id = {review_id}"
     cur.execute(query)
 
     mysql.connection.commit()

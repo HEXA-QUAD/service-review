@@ -8,7 +8,7 @@ def send2SNS():
 
     sns_client = boto3.client('sns', aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key, region_name=region_name)
 
-    message = 'test'
+    message = 'event'
 
     response = sns_client.publish(
         TopicArn=sns_topic_arn,
