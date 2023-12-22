@@ -97,12 +97,11 @@ def post_review():
     data = request.json
 
     if "contents" in data:
-        api_url = profanity_api_url + '?text={}'.format(data['contents'])
+        api_url = 'https://api.api-ninjas.com/v1/profanityfilter?text={}'.format(data['contents'])
         response = requests.get(api_url, headers={'X-Api-Key': 'M0eB3+yE0Y1SeYEcPge8pw==RCoIJ0GIrXiOguwn'})
         dict_data = json.loads(response.text)
         if response.status_code == requests.codes.ok:
             is_profanity = dict_data["has_profanity"]
-            logging.info(is_profanity)
             if is_profanity:
                 values = ', '.join('%s' for _ in data.values()) + ', false, false'
                 send2SNS()
@@ -301,7 +300,9 @@ def get_comment():
 @app.route('/api/review/comment/like/', methods=['GET'])
 def get_num_like_by_review():
     cur = mysql.connection.cursor()
-    review_id = int(request.args.get('review_id', 1))
+    review_id = int(request.args.get('review_id'))
+    if review_id is None:
+        return jsonify({'error message': 'review_id not found'})
 
     query = f"SELECT COUNT(*) AS num_of_likes FROM comment WHERE type = 'like' AND review_id = {review_id}"
     cur.execute(query)
@@ -313,7 +314,9 @@ def get_num_like_by_review():
 @app.route('/api/review/comment/dislike/', methods=['GET'])
 def get_num_dislike_by_review():
     cur = mysql.connection.cursor()
-    review_id = int(request.args.get('review_id', 1))
+    review_id = int(request.args.get('review_id'))
+    if review_id is None:
+        return jsonify({'error message': 'review_id not found'})
 
     query = f"SELECT COUNT(*) AS num_of_likes FROM comment WHERE type = 'dislike' AND review_id = {review_id}"
     cur.execute(query)
