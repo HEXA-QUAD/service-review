@@ -98,8 +98,10 @@ def post_review():
 
     api_url = profanity_api_url + '?text={}'.format(data['contents'])
     response = requests.get(api_url, headers={'X-Api-Key': 'M0eB3+yE0Y1SeYEcPge8pw==RCoIJ0GIrXiOguwn'})
+    dict_data = json.loads(response.text)
     if response.status_code == requests.codes.ok:
-        is_profanity = response.text["has_profanity"]
+        is_profanity = dict_data["has_profanity"]
+        logging.info(is_profanity)
         if is_profanity:
             values = ', '.join('%s' for _ in data.values()) + ', false, false'
             send2SNS()
@@ -154,8 +156,8 @@ def update_review():
 
     cur.execute(query, tuple(data.values()) + (review_id,))
 
-    query = f"UPDATE review SET shown = 0 WHERE review_id = {review_id}"
-    cur.execute(query)
+    # query = f"UPDATE review SET shown = 0 WHERE review_id = {review_id}"
+    # cur.execute(query)
 
     mysql.connection.commit()
     cur.close()
