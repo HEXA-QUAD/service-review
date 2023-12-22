@@ -156,7 +156,7 @@ def update_review():
     else:
         values = ', '.join('%s' for _ in data.values()) + ', false, true'
 
-    set_clause = ', '.join(f"{key} = %s" for key in data.keys())
+    set_clause = ', '.join(f"{key} = %s" for key in data.keys()) + ', pinned, shown'
     query = f"UPDATE review SET {set_clause} WHERE review_id = %s"
 
     cur.execute(query, tuple(data.values()) + (review_id,))
