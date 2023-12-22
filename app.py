@@ -5,6 +5,8 @@ from flask import Flask, jsonify, request, url_for
 from flask_mysqldb import MySQL
 from sendSNS import send2SNS
 import requests
+import logging
+logging.basicConfig(level=logging.DEBUG)
 
 
 app = Flask(__name__)
@@ -137,6 +139,7 @@ def update_review():
     response = requests.get(api_url, headers={'X-Api-Key': 'M0eB3+yE0Y1SeYEcPge8pw==RCoIJ0GIrXiOguwn'})
     if response.status_code == requests.codes.ok:
         is_profanity = response.text["has_profanity"]
+        logging.info(is_profanity)
         if is_profanity:
             values = ', '.join('%s' for _ in data.values()) + ', false, false'
             send2SNS()
