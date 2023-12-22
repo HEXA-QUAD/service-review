@@ -26,7 +26,7 @@ mysql = MySQL(app)
 
 DEFAULT_PER_PAGE = 10
 
-profanity_api_url= 'https://api.api-ninjas.com/v1/profanityfilter'
+profanity_api_url = 'https://api.api-ninjas.com/v1/profanityfilter'
 
 def pagination_links(page, total_pages, endpoint, per_page, filters):
     links = {}
@@ -136,10 +136,11 @@ def update_review():
         return jsonify({'error message': 'cannot modify "pinned" column'})
 
     api_url = profanity_api_url + '{}'.format(data['contents'])
+    logging.info("hereeee"+api_url)
     response = requests.get(api_url, headers={'X-Api-Key': 'M0eB3+yE0Y1SeYEcPge8pw==RCoIJ0GIrXiOguwn'})
     if response.status_code == requests.codes.ok:
         is_profanity = response.text["has_profanity"]
-        logging.info(api_url)
+
         if is_profanity:
             values = ', '.join('%s' for _ in data.values()) + ', false, false'
             send2SNS()
