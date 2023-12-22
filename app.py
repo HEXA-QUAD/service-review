@@ -6,7 +6,7 @@ from flask_mysqldb import MySQL
 from sendSNS import send2SNS
 import requests
 import logging
-logging.basicConfig(level=logging.DEBUG)
+# logging.basicConfig(level=logging.DEBUG)
 import json
 
 app = Flask(__name__)
