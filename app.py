@@ -96,7 +96,7 @@ def post_review():
     cur = mysql.connection.cursor()
     data = request.json
 
-    api_url = profanity_api_url + '{}'.format(data['contents'])
+    api_url = profanity_api_url + '?text={}'.format(data['contents'])
     response = requests.get(api_url, headers={'X-Api-Key': 'M0eB3+yE0Y1SeYEcPge8pw==RCoIJ0GIrXiOguwn'})
     if response.status_code == requests.codes.ok:
         is_profanity = response.text["has_profanity"]
@@ -135,7 +135,7 @@ def update_review():
     if 'pinned' in data.keys():
         return jsonify({'error message': 'cannot modify "pinned" column'})
 
-    api_url = profanity_api_url + '{}'.format(data['contents'])
+    api_url = profanity_api_url + '?text={}'.format(data['contents'])
     logging.info("hereeee"+api_url)
     response = requests.get(api_url, headers={'X-Api-Key': 'M0eB3+yE0Y1SeYEcPge8pw==RCoIJ0GIrXiOguwn'})
     if response.status_code == requests.codes.ok:
