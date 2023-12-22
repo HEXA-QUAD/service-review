@@ -139,6 +139,7 @@ def update_review():
     response = requests.get(api_url, headers={'X-Api-Key': 'M0eB3+yE0Y1SeYEcPge8pw==RCoIJ0GIrXiOguwn'})
     if response.status_code == requests.codes.ok:
         is_profanity = response.text["has_profanity"]
+        logging.info(hereeee)
         logging.info(response.text)
         if is_profanity:
             values = ', '.join('%s' for _ in data.values()) + ', false, false'
