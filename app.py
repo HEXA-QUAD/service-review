@@ -155,7 +155,6 @@ def update_review():
 
     mysql.connection.commit()
     cur.close()
-    send2SNS()
     return jsonify({'message': 'Review updated successfully'})
 
 @app.route('/api/review/', methods=['DELETE'])
