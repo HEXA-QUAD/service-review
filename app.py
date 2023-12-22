@@ -141,7 +141,7 @@ def update_review():
         # is_profanity = response.text["has_profanity"]
         is_profanity = False
         logging.info("hereeee")
-        logging.info(response.text)
+        logging.info(type(response.text))
         if is_profanity:
             values = ', '.join('%s' for _ in data.values()) + ', false, false'
             send2SNS()
