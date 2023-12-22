@@ -95,7 +95,7 @@ def post_review():
     '''
     cur = mysql.connection.cursor()
     data = request.json
-
+    logging.info(data)
     api_url = profanity_api_url + '?text={}'.format(data['contents'])
     response = requests.get(api_url, headers={'X-Api-Key': 'M0eB3+yE0Y1SeYEcPge8pw==RCoIJ0GIrXiOguwn'})
     dict_data = json.loads(response.text)
