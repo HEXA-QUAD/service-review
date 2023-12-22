@@ -147,16 +147,19 @@ def update_review():
             is_profanity = dict_data["has_profanity"]
             logging.info(is_profanity)
             if is_profanity:
-                values = ', '.join('%s' for _ in data.values()) + ', false, false'
+                # values = ', '.join('%s' for _ in data.values()) + ', false, false'
+                data['shown'] = False
                 send2SNS()
             else:
-                values = ', '.join('%s' for _ in data.values()) + ', false, true'
+                # values = ', '.join('%s' for _ in data.values()) + ', false, true'
+                data['shown'] = True
         else:
             print("Error:", response.status_code, response.text)
     else:
-        values = ', '.join('%s' for _ in data.values()) + ', false, true'
+        # values = ', '.join('%s' for _ in data.values()) + ', false, true'
+        data['shown'] = True
 
-    set_clause = ', '.join(f"{key} = %s" for key in data.keys()) + ', pinned, shown'
+    set_clause = ', '.join(f"{key} = %s" for key in data.keys())
     query = f"UPDATE review SET {set_clause} WHERE review_id = %s"
 
     cur.execute(query, tuple(data.values()) + (review_id,))
