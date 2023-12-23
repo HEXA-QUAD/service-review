@@ -135,8 +135,7 @@ def update_review():
         review_id = data['review_id']
     except Exception as e:
         return jsonify({'error message': 'parameter not found: '+str(e)})
-    if 'pinned' in data.keys():
-        return jsonify({'error message': 'cannot modify "pinned" column'})
+
 
     if "contents" in data:
         api_url = profanity_api_url + '?text={}'.format(data['contents'])
